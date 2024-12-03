@@ -33,26 +33,14 @@ func main() {
 	slices.Sort(locations1)
 	slices.Sort(locations2)
 
-	fmt.Println("Locations")
 	for i := 0; i < idx; i++ {
-		fmt.Println(locations1[i], locations2[i])
-	}
-
-	for i := 0; i < idx; i++ {
-		distance := locations2[i] - locations1[1]
-		fmt.Printf("%8T\n", distance)
+		distance := locations2[i] - locations1[i]
 		if distance < 0 {
 			distance = -distance
 		}
 		distances = append(distances, distance)
 	}
 
-	// fmt.Println("Distances")
-	// for i := 0; i < idx; i++ {
-	// 	fmt.Println(distances[i])
-	// }
-
-	fmt.Println(len(distances))
 	for i := 0; i < idx; i++ {
 		distanceSum += distances[i]
 	}
