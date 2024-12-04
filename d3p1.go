@@ -21,15 +21,12 @@ func main() {
 	validExp := regexp.MustCompile(`mul\([0-9]{1,3},[0-9]{1,3}\)`)
 
 	for scan.Scan() {
-		fmt.Println("Program started")
 		expInstances := validExp.FindAll([]byte(scan.Text()), -1)
-		fmt.Printf("%q\n", expInstances)
 
 		for _, exp := range expInstances {
 			exprtkObj.SetExpression(string(exp))
 			exprtkObj.CompileExpression()
 			sum += int(exprtkObj.GetEvaluatedValue())
-			fmt.Println(sum)
 		}
 	}
 
