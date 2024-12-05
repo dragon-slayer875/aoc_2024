@@ -11,15 +11,20 @@ func main() {
 	scan := bufio.NewScanner(os.Stdin)
 	var input []string
 	var xmas_instances int
-	validExp := regexp.MustCompile(`XMAS|SAMX`)
+	validExp := regexp.MustCompile(`XMAS`)
+	validExp2 := regexp.MustCompile(`SAMX`)
+
+	validExps := []*regexp.Regexp{validExp, validExp2}
 
 	for scan.Scan() {
 		input = append(input, scan.Text())
 	}
 
-	for _, line := range input {
-		expInstances := validExp.FindAll([]byte(line), -1)
-		xmas_instances += len(expInstances)
+	for _, exp := range validExps {
+		for _, line := range input {
+			expInstances := exp.FindAll([]byte(line), -1)
+			xmas_instances += len(expInstances)
+		}
 	}
 
 	// vertical lines
@@ -34,9 +39,11 @@ func main() {
 		vertical_input = append(vertical_input, vertical_line)
 	}
 
-	for _, line := range vertical_input {
-		expInstances := validExp.FindAll([]byte(line), -1)
-		xmas_instances += len(expInstances)
+	for _, exp := range validExps {
+		for _, line := range vertical_input {
+			expInstances := exp.FindAll([]byte(line), -1)
+			xmas_instances += len(expInstances)
+		}
 	}
 
 	// diagonal lines
@@ -59,9 +66,11 @@ func main() {
 		diagonal_input = append(diagonal_input, diagonal_line)
 	}
 
-	for _, line := range diagonal_input {
-		expInstances := validExp.FindAll([]byte(line), -1)
-		xmas_instances += len(expInstances)
+	for _, exp := range validExps {
+		for _, line := range diagonal_input {
+			expInstances := exp.FindAll([]byte(line), -1)
+			xmas_instances += len(expInstances)
+		}
 	}
 
 	// opposite diagonal lines
@@ -81,13 +90,14 @@ func main() {
 		for j := i; j < len(input); j++ {
 			diagonal_line += string(input[0-i+j][j])
 		}
-		fmt.Println(diagonal_line)
 		opposite_diagonal_input = append(opposite_diagonal_input, diagonal_line)
 	}
 
-	for _, line := range opposite_diagonal_input {
-		expInstances := validExp.FindAll([]byte(line), -1)
-		xmas_instances += len(expInstances)
+	for _, exp := range validExps {
+		for _, line := range opposite_diagonal_input {
+			expInstances := exp.FindAll([]byte(line), -1)
+			xmas_instances += len(expInstances)
+		}
 	}
 
 	fmt.Println(xmas_instances)
